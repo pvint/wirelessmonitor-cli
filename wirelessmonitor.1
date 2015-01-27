@@ -1,0 +1,71 @@
+.TH WIRELESSMONITOR 1
+.\" NAME should be all caps, SECTION should be 1-8, maybe w/ subsection
+.\" other parms are allowed: see man(7), man(1)
+.SH NAME
+wirelessmonitor \- Monitor wireless network connectivity
+.SH SYNOPSIS
+.B wirelessmonitor
+[
+.I options
+]
+
+.SH "DESCRIPTION"
+A simple program to monitor when (or check if) there is wireless 
+network connectivity on any interface.
+
+.SH OPTIONS
+.TP
+.B -h --help
+Show help
+.TP
+.B -D --daemon
+Fork to the background. All output is sent to /dev/null.
+.TP 
+.B -i --isup
+Check to see if a wireless connection is active. 
+Will output "Up" and exit with a status of 0 (zero) if a connection
+is active, or will output "Down" and exit with a status of 1 (one)
+if there is non active connection.
+The command given with --up or --down will NOT run.
+.TP
+.B --up "command"
+Run "command" when an interface connects. "command" is a required argument.
+See example below.
+.TP
+.B --down "command"
+Run "command" when the connection is lost. "command" is a required argument.
+Note that if there are multiple connections this will only run when the 
+last connection is lost.
+
+.SH CAVEATS
+There is (at this time) no way to specify a particular interface to watch.
+The intended purpose of this program is just to monitor if any interface 
+is connected. This may change in future versions.
+
+.SH EXIT STATUS
+.TP
+When the -i or --isup option is specified:
+.TP
+0 if a wireless network connection is up
+.TP
+1 if wireless network connection is not up
+
+.SH EXAMPLES
+.B wirelessmonitor -D --up "/usr/bin/play /usr/share/sounds/up.ogg"
+.TP
+Will play up.ogg every time a wireless connection is established and the program will fork to the background.
+
+.B wirelessmonitor --isup
+.TP
+Will produce output like the following:
+.TP
+$ ./wirelessmonitor -i
+.TP
+Wireless Monitor v0.5
+.TP
+Connection is DOWN
+
+.SH AUTHOR
+.TP
+Paul Vint <pjvint@gmail.com>
+
